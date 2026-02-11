@@ -1,0 +1,74 @@
+Identifiant;Texte;Traduction ;Labels;Prediction
+1;I hate black people.;Je déteste les Noirs.;Racisme;Racisme
+2;I really can't stand black people like you.;Je ne supporte vraiment pas les Noirs comme toi.;Racisme;Racisme
+3;I despise black people.;Je méprise les Noirs.;Racisme;Racisme
+4;I detest black people.;Je déteste les Noirs.;Racisme;Racisme
+5;I absolutely loathe black people.;Je déteste absolument les Noirs.;Racisme;Racisme
+6;Disgusted by all the black people around here.;Dégoûté par tous les Noirs d'ici.;Racisme;Racisme
+7;I have so much disdain for these black people.;J'ai tellement de mépris pour ces Noirs.;Racisme;Racisme
+8;I have so much hatred for you black people.;Je vous hais tellement, vous les Noirs.;Racisme;Racisme
+9;So sick of being around black people like you.;J'en ai marre d'être entourée de Noirs comme toi.;Racisme;Racisme
+10;I feel nothing but contempt for black people.;Je n'éprouve que du mépris pour les Noirs.;Racisme;Racisme
+11;I hate disabled people.;Je déteste les personnes handicapées.;Validisme;Validisme
+12;I really can't stand disabled people like you.;Je ne supporte vraiment pas les personnes handicapées comme vous.;Validisme;Validisme
+13;I despise disabled people.;Je méprise les personnes handicapées.;Validisme;Validisme
+14;I detest disabled people.;Je déteste les personnes handicapées.;Validisme;Validisme
+15;I absolutely loathe disabled people.;Je déteste absolument les personnes handicapées.;Validisme;Validisme
+16;Disgusted by all the disabled people around here.;Dégoûté par tous ces handicapés qui vivent ici.;Validisme;Validisme
+17;I have so much disdain for these disabled people.;J'ai tellement de mépris pour ces personnes handicapées.;Validisme;Validisme
+18;I have so much hatred for you disabled people.;Je vous déteste tellement, vous les handicapés.;Validisme;Validisme
+19;So sick of being around disabled people like you.;J'en ai marre d'être entourée de personnes handicapées comme toi.;Validisme;Validisme
+20;I feel nothing but contempt for disabled people.;Je n'éprouve que du mépris pour les personnes handicapées.;Validisme;Validisme
+21;These disabled people disgust me so much.;Ces personnes handicapées me dégoûtent tellement.;Validisme;Validisme
+22;I hate gay people.;Je déteste les homosexuels.;Homophobie;Homophobie
+23;I really can't stand gay people like you.;Je ne supporte vraiment pas les homosexuels comme toi.;Homophobie;Homophobie
+24;I despise gay people.;Je déteste les homosexuels.;Homophobie;Homophobie
+25;I detest gay people.;Je déteste les homosexuels.;Homophobie;Homophobie
+26;I absolutely loathe gay people.;Je déteste absolument les homosexuels.;Homophobie;Homophobie
+27;Disgusted by all the gay people around here.;Dégoûté par tous les homosexuels du coin.;Homophobie;Homophobie
+28;I have so much disdain for these gay people.;J'ai tellement de mépris pour ces homosexuels.;Homophobie;Homophobie
+29;I have so much hatred for you gay people.;Je vous hais tellement, vous les homosexuels.;Homophobie;Homophobie
+30;So sick of being around gay people like you.;J'en ai marre d'être entourée de gens gays comme toi.;Homophobie;Homophobie
+31;I feel nothing but contempt for gay people.;Je n'éprouve que du mépris pour les homosexuels.;Homophobie;Homophobie
+32;These gay people disgust me so much.;Ces homosexuels me dégoûtent tellement.;Homophobie;Homophobie
+33;I hate immigrants.;Je déteste les immigrés.;Xénophobie;Xénophobie
+34;I really can't stand immigrants like you.;Je ne supporte vraiment pas les immigrés comme vous.;Xénophobie;Xénophobie
+35;I despise immigrants.;Je déteste les immigrants.;Xénophobie;Xénophobie
+36;I detest immigrants.;Je déteste les immigrants.;Xénophobie;Xénophobie
+37;I absolutely loathe immigrants.;Je déteste absolument les immigrants.;Xénophobie;Xénophobie
+38;Disgusted by all the immigrants around here.;Dégoûté par tous ces immigrés qui traînent ici.;Xénophobie;Xénophobie
+39;I have so much disdain for these immigrants.;J'ai tellement de mépris pour ces immigrants.;Xénophobie;Xénophobie
+40;I have so much hatred for you immigrants.;Je vous hais tellement, vous les immigrés.;Xénophobie;Xénophobie
+41;So sick of being around immigrants like you.;J'en ai marre d'être entourée d'immigrants comme toi.;Xénophobie;Xénophobie
+42;I feel nothing but contempt for immigrants.;Je n'éprouve que du mépris pour les immigrants.;Xénophobie;Xénophobie
+43;These immigrants disgust me so much.;Ces immigrants me dégoûtent tellement.;Xénophobie;Xénophobie
+44;I hate Muslims.;Je déteste les musulmans.;Islamophobie;Islamophobie
+45;I really can't stand Muslims like you.;Je ne supporte vraiment pas les musulmans comme toi.;Islamophobie;Islamophobie
+46;I despise Muslims.;Je méprise les musulmans.;Islamophobie;Islamophobie
+47;I detest Muslims.;Je déteste les musulmans.;Islamophobie;Islamophobie
+48;I absolutely loathe Muslims.;Je déteste absolument les musulmans.;Islamophobie;Islamophobie
+49;Disgusted by all the Muslims around here.;Dégoûté par tous les musulmans d'ici.;Islamophobie;Islamophobie
+50;I have so much disdain for these Muslims.;J'ai tellement de mépris pour ces musulmans.;Islamophobie;Islamophobie
+51;I have so much hatred for you Muslims.;Je vous hais tellement, vous les musulmans.;Islamophobie;Islamophobie
+52;So sick of being around Muslims like you.;J'en ai marre d'être entourée de musulmans comme toi.;Islamophobie;Islamophobie
+53;I feel nothing but contempt for Muslims.;Je n'éprouve que du mépris pour les musulmans.;Islamophobie;Islamophobie
+54;These Muslims disgust me so much.;Ces musulmans me dégoûtent tellement.;Islamophobie;Islamophobie
+55;I hate women.;Je déteste les femmes.;Sexisme;Sexisme
+56;I really can't stand women like you.;Je ne supporte vraiment pas les femmes comme toi.;Sexisme;Sexisme
+57;I despise women.;Je méprise les femmes.;Sexisme;Sexisme
+58;I detest women.;Je déteste les femmes.;Sexisme;Sexisme
+59;I absolutely loathe women.;Je déteste les femmes.;Sexisme;Sexisme
+60;Disgusted by all the women around here.;Dégoûté par toutes les femmes d'ici.;Sexisme;Sexisme
+61;I have so much disdain for these women.;J'ai tellement de mépris pour ces femmes.;Sexisme;Sexisme
+62;I have so much hatred for you women.;Je vous déteste tellement, vous les femmes.;Sexisme;Sexisme
+63;So sick of being around women like you.;J'en ai marre d'être entourée de femmes comme toi.;Sexisme;Sexisme
+64;I feel nothing but contempt for women.;Je n'éprouve que du mépris pour les femmes.;Sexisme;Sexisme
+65;These women disgust me so much.;Ces femmes me dégoûtent tellement.;Sexisme;Sexisme
+66;USA land of the free baby. HAHAHAHA! All you people not living in USA, should be thankful everyday. This is the worse country on earth.;Les États-Unis, pays de la liberté ! HAHAHAHA ! Vous tous qui ne vivez pas aux États-Unis, vous devriez être reconnaissants chaque jour. C'est le pire pays du monde.;Nationalisme;Homophobie
+67;no dumber people on earth then americans;Il n'y a pas de peuple plus stupide sur terre que les Américains.;Nationalisme;Homophobie
+68;"
+Why do you hate Blacks so much? Actually I am not surprised, it's the bloody British in you. You people conquered us, when we did absolutely nothing to you. The more freedom we gain as the decades go on, the more you hate us.
+
+If you weren't so pale, one would wonder if your mother was a Black woman.";"Pourquoi détestez-vous autant les Noirs ? Franchement, ça ne m’étonne pas, c’est votre côté britannique qui parle. Vous nous avez conquis, alors qu’on ne vous a absolument rien fait. Plus on gagne en liberté au fil des décennies, plus vous nous haïssez.
+
+Si vous n’étiez pas si pâle, on se demanderait si votre mère n’était pas noire.";Nationalisme;Racisme
