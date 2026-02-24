@@ -21,7 +21,7 @@ def read_csv_safely(path: str) -> pd.DataFrame:
     if not os.path.exists(path):
         raise FileNotFoundError(
             f"Fichier introuvable: {path}\n"
-            f"➡️ Mets ce script dans le même dossier que les CSV, ou mets le chemin complet."
+            f" Mets ce script dans le même dossier que les CSV, ou mets le chemin complet."
         )
     try:
         df = pd.read_csv(path)
@@ -48,8 +48,8 @@ for col in [TEXT_COL, LABEL_COL]:
 if TEXT_COL not in test_df.columns:
     raise ValueError(f"Colonne texte '{TEXT_COL}' introuvable dans TEST. Colonnes = {list(test_df.columns)}")
 
-print(f"\n✅ Colonne TEXTE utilisée : {TEXT_COL}")
-print(f"✅ Colonne LABEL utilisée : {LABEL_COL}\n")
+print(f"\n Colonne TEXTE utilisée : {TEXT_COL}")
+print(f" Colonne LABEL utilisée : {LABEL_COL}\n")
 
 train_df = train_df.dropna(subset=[TEXT_COL, LABEL_COL]).copy()
 train_df[TEXT_COL]  = train_df[TEXT_COL].astype(str)
@@ -89,9 +89,9 @@ print("F1-macro par fold:", np.round(cv_scores, 4))
 print("F1-macro moyen   :", round(cv_scores.mean(), 4))
 print("Écart-type       :", round(cv_scores.std(), 4))
 
-print("\n🚀 Entraînement du modèle sur le train (80%)...")
+print("\n-> Entraînement du modèle sur le train (80%)...")
 model.fit(X_train, y_train)
-print("✅ Entraînement terminé.")
+print(" Entraînement terminé.")
 
 y_pred = model.predict(X_valid)
 
@@ -105,7 +105,7 @@ print("\n--- MATRICE DE CONFUSION (validation 20%) ---")
 print("Ordre des classes:", labels_order)
 print(cm)
 
-print("\n🏁 Entraînement final sur 100% du train...")
+print("\n-> Entraînement final sur 100% du train...")
 model.fit(X, y)
 
 test_df = test_df.copy()
@@ -118,5 +118,5 @@ out["prediction"] = test_pred
 OUT_PATH = "predictions_base_test.csv"
 out.to_csv(OUT_PATH, index=False, encoding="utf-8-sig")
 
-print(f"\n✅ Fichier généré : {OUT_PATH}")
-print("➡️ La colonne 'prediction' contient la classe prédite (multiclasse).")
+print(f"\n-> Fichier généré : {OUT_PATH}")
+print("La colonne 'prediction' contient la classe prédite (multiclasse).")
