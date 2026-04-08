@@ -1,0 +1,71 @@
+---
+title: ""
+output:
+  pdf_document:
+    fig_caption: true
+geometry: margin=2.5cm
+fontsize: 11pt
+header-includes:
+  - \usepackage{xcolor}
+  - \usepackage{fancyhdr}
+  - \usepackage{mdframed}
+  - \usepackage{array}
+  - \usepackage{booktabs}
+  - \usepackage{enumitem}
+  - \definecolor{violet}{HTML}{6B3FA0}
+  - \definecolor{violetclair}{HTML}{EDE7F6}
+  - \definecolor{gris}{HTML}{F5F5F5}
+  - \definecolor{grisfonce}{HTML}{555555}
+  - \pagestyle{fancy}
+  - \fancyhf{}
+  - \renewcommand{\headrulewidth}{0pt}
+  - \renewcommand{\footrulewidth}{0pt}
+  - \fancyfoot[C]{\thepage}
+  - \setlength{\parindent}{0pt}
+  - \setlength{\parskip}{6pt}
+---
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+\begin{center}
+{\Large \textbf{\textcolor{violet}{Compte rendu semaine 3}}}\\[0.4cm]
+{\normalsize \textcolor{grisfonce}{Projet science des données 4 : Détection du harcèlement en ligne}}\\[0.2cm]
+{\normalsize \textcolor{grisfonce}{L3 MIASHS — Chloé, Sarah, Hafsa, Nadir}}
+\end{center}
+
+\vspace{0.5cm}
+
+\begin{mdframed}[backgroundcolor=violetclair, linecolor=violet, linewidth=1.5pt, roundcorner=5pt]
+\textbf{\textcolor{violet}{Répartition des tâches}}\\[0.3cm]
+\begin{tabular}{p{3cm} p{10cm}}
+Chloé & Rééquilibrage des données, nouveaux MCD/MOD \\[0.2cm]
+Sarah & Rééquilibrage des données, création de la base SQL \\[0.2cm]
+Hafsa & Rééquilibrage des données, nouveaux MCD/MOD \\[0.2cm]
+Nadir & Rééquilibrage des données, création de la base SQL \\
+\end{tabular}
+\end{mdframed}
+
+\vspace{0.4cm}
+
+# Semaine 3 — Amélioration des données et base SQL
+
+Tout le groupe était présent cette semaine. Le travail s'est concentré sur trois axes principaux.
+
+Le rééquilibrage des données a mobilisé tout le groupe. Suite aux observations de la semaine précédente, il a été décidé de fixer des limites strictes pour garantir un meilleur équilibre : 200 textes par catégorie de harcèlement dans la base d'entraînement (soit 1200 textes haineux au total + 1200 non haineux = 2400 textes), et 20 textes par catégorie dans la base de test (soit 120 haineux + 120 non haineux = 240 textes). Cette répartition équilibrée est essentielle pour éviter que le modèle soit biaisé vers les catégories les mieux représentées.
+
+Sarah et Nadir ont créé la base de données sous SQL en intégrant les deux bases (entraînement et test) dans un seul fichier harcelement.sql. Cette étape permet de structurer les données de façon plus rigoureuse et de faciliter les futures manipulations.
+
+Chloé et Hafsa ont revu et corrigé le MCD (Modèle Conceptuel de Données) et le MOD (Modèle Organisationnel de Données). La première version réalisée en semaine 2 comportait des imprécisions liées au fait que la structure des données n'était pas encore totalement stabilisée, la nouvelle version reflète l'organisation finale des bases.
+
+\vspace{0.3cm}
+
+\begin{mdframed}[backgroundcolor=violetclair, linecolor=violet, linewidth=1.5pt, roundcorner=5pt]
+\textbf{\textcolor{violet}{Pour la semaine 4}}\\[0.2cm]
+\begin{itemize}[leftmargin=1cm]
+\item Ajouter une nouvelle catégorie regroupant les textes non haineux
+\item Finaliser et enrichir les données existantes
+\item Réaliser les premières visualisations des données
+\item Mettre en place une validation croisée dans le code
+\end{itemize}
+\end{mdframed}

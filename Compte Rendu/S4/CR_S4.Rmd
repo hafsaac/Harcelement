@@ -1,0 +1,70 @@
+---
+title: ""
+output:
+  pdf_document:
+    fig_caption: true
+geometry: margin=2.5cm
+fontsize: 11pt
+header-includes:
+  - \usepackage{xcolor}
+  - \usepackage{fancyhdr}
+  - \usepackage{mdframed}
+  - \usepackage{array}
+  - \usepackage{booktabs}
+  - \usepackage{enumitem}
+  - \definecolor{violet}{HTML}{6B3FA0}
+  - \definecolor{violetclair}{HTML}{EDE7F6}
+  - \definecolor{gris}{HTML}{F5F5F5}
+  - \definecolor{grisfonce}{HTML}{555555}
+  - \pagestyle{fancy}
+  - \fancyhf{}
+  - \renewcommand{\headrulewidth}{0pt}
+  - \renewcommand{\footrulewidth}{0pt}
+  - \fancyfoot[C]{\thepage}
+  - \setlength{\parindent}{0pt}
+  - \setlength{\parskip}{6pt}
+---
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+\begin{center}
+{\Large \textbf{\textcolor{violet}{Compte rendu semaine 4}}}\\[0.4cm]
+{\normalsize \textcolor{grisfonce}{Projet science des données 4 : Détection du harcèlement en ligne}}\\[0.2cm]
+{\normalsize \textcolor{grisfonce}{L3 MIASHS — Chloé, Sarah, Hafsa, Nadir}}
+\end{center}
+
+\vspace{0.5cm}
+
+\begin{mdframed}[backgroundcolor=violetclair, linecolor=violet, linewidth=1.5pt, roundcorner=5pt]
+\textbf{\textcolor{violet}{Répartition des tâches}}\\[0.3cm]
+\begin{tabular}{p{3cm} p{10cm}}
+Chloé & Visualisations (nuages de mots, graphiques) \\[0.2cm]
+Sarah & Restructuration des données, ajout des colonnes Type et Catégorie \\[0.2cm]
+Hafsa & Restructuration des données, ajout des colonnes Type et Catégorie \\[0.2cm]
+Nadir & Validation croisée et améliorations du code \\
+\end{tabular}
+\end{mdframed}
+
+\vspace{0.4cm}
+
+# Semaine 4 — Restructuration des données, visualisations et amélioration du code
+
+Tout le groupe était présent cette semaine. Le travail s'est organisé en trois axes.
+
+Sarah et Hafsa ont travaillé sur la restructuration des données. La base comporte désormais 5 colonnes : Identifiant, Texte, Traduction, Type et Catégorie. La colonne Type contient deux classes — Haineux et Non Haineux — indiquant si le texte constitue un discours haineux ou non. La colonne Catégorie précise, pour les textes haineux, laquelle des six formes de harcèlement est concernée : Racisme, Sexisme, Homophobie, Islamophobie, Validisme ou Xénophobie. La répartition finale est la suivante : 1200 textes haineux et 1200 non haineux dans la base d'entraînement (200 par catégorie), et 120 haineux et 120 non haineux dans la base de test (20 par catégorie).
+
+Chloé a réalisé les premières visualisations des données : nuages de mots et différents types de graphiques permettant de mieux comprendre la distribution des données et de préparer le choix des modèles d'IA.
+
+Nadir a amélioré le code en mettant en place une validation croisée pour mieux évaluer les performances du modèle, et en ajoutant des prédictions par catégorie. Le code génère en fin d'exécution un fichier CSV contenant les résultats, disponible sur le dépôt Git.
+
+\vspace{0.3cm}
+
+\begin{mdframed}[backgroundcolor=violetclair, linecolor=violet, linewidth=1.5pt, roundcorner=5pt]
+\textbf{\textcolor{violet}{Pour la semaine 5}}\\[0.2cm]
+\begin{itemize}[leftmargin=1cm]
+\item Réaliser des visualisations plus poussées sur la base complète Harcèlement
+\item Identifier quel modèle d'IA serait le plus adapté à notre problématique
+\item Commencer à réfléchir à la construction des modèles
+\end{itemize}
+\end{mdframed}

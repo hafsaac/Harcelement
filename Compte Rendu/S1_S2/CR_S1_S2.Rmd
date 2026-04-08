@@ -1,0 +1,90 @@
+---
+title: ""
+output:
+  pdf_document:
+    fig_caption: true
+geometry: margin=2.5cm
+fontsize: 11pt
+header-includes:
+  - \usepackage{xcolor}
+  - \usepackage{fancyhdr}
+  - \usepackage{mdframed}
+  - \usepackage{array}
+  - \usepackage{booktabs}
+  - \usepackage{enumitem}
+  - \definecolor{violet}{HTML}{6B3FA0}
+  - \definecolor{violetclair}{HTML}{EDE7F6}
+  - \definecolor{gris}{HTML}{F5F5F5}
+  - \definecolor{grisfonce}{HTML}{555555}
+  - \pagestyle{fancy}
+  - \fancyhf{}
+  - \renewcommand{\headrulewidth}{0pt}
+  - \renewcommand{\footrulewidth}{0pt}
+  - \fancyfoot[C]{\thepage}
+  - \setlength{\parindent}{0pt}
+  - \setlength{\parskip}{6pt}
+---
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+\begin{center}
+{\Large \textbf{\textcolor{violet}{Compte rendu semaines 1 \& 2}}}\\[0.4cm]
+{\normalsize \textcolor{grisfonce}{Projet science des données 4 : Détection du harcèlement en ligne}}\\[0.2cm]
+{\normalsize \textcolor{grisfonce}{L3 MIASHS — Chloé, Sarah, Hafsa, Nadir}}
+\end{center}
+
+\vspace{0.5cm}
+
+\begin{mdframed}[backgroundcolor=violetclair, linecolor=violet, linewidth=1.5pt, roundcorner=5pt]
+\textbf{\textcolor{violet}{Répartition des tâches}}\\[0.3cm]
+\begin{tabular}{p{3cm} p{10cm}}
+\textbf{Chloé} & Recherche des jeux de données, création de la base d'entraînement, MCD/MOD \\[0.2cm]
+\textbf{Sarah} & Recherche des jeux de données, nettoyage et tri des données \\[0.2cm]
+\textbf{Hafsa} & Recherche des jeux de données, création de la base de test, MCD/MOD \\[0.2cm]
+\textbf{Nadir} & Code (vectorisation TF-IDF, modèle, rapport de classification, export des résultats) \\
+\end{tabular}
+\end{mdframed}
+
+\vspace{0.4cm}
+
+# Semaine 1 — Choix du sujet
+
+Au début du projet, deux idées s'affrontaient au sein du groupe : Chloé et Sarah penchaient pour une analyse des prénoms et des naissances dans le monde, tandis que Nadir et Hafsa proposaient de travailler sur la détection automatique du harcèlement en ligne. Après discussion avec la professeure et réflexion collective sur les possibilités techniques et la disponibilité des données, tout le groupe s'est accordé sur le thème du harcèlement qui est un sujet à la fois techniquement intéressant et socialement pertinent.
+
+Chloé, Hafsa et Sarah ont ensuite recherché des jeux de données publics exploitables. Après avoir exploré plusieurs sources, deux bases disponibles sur Kaggle ont été retenues : \textit{Linguistic Analysis of Hateful Speech Dataset} et \textit{YouTube Toxicity Data}. Ces bases contiennent des messages annotés avec la présence ou non de contenu haineux ou toxique.
+
+# Semaine 2 — Préparation des données et premier modèle
+
+Cette semaine, tout le groupe était présent et chacun a pris en charge une partie du travail.
+
+Sarah s'est occupée du nettoyage et du tri des données : analyse des jeux de données, sélection des colonnes utiles (texte + label), suppression des colonnes inutiles et des valeurs manquantes, vérification de la cohérence des catégories.
+
+Chloé a construit la base d'entraînement à partir des deux jeux de données Kaggle. Hafsa a créé la base de test de façon totalement indépendante, en prenant environ 1/10 de chaque jeu de données (10 lignes par catégorie de harcèlement), en veillant à ce qu'aucune ligne ne soit partagée entre les deux bases.
+
+Chloé et Hafsa ont réalisé le MCD (Modèle Conceptuel de Données) et le MOD (Modèle Organisationnel de Données) une première version qui sera retravaillée en semaine 3.
+
+Nadir a développé le code : vectorisation TF-IDF (textes en minuscules, suppression des stop words anglais, 5000 features max), entraînement du modèle sur la base d'entraînement, génération du rapport de classification et de la matrice de confusion, et export des résultats dans un fichier \texttt{Base\_Test\_Predictions.xlsx} contenant les textes, les labels réels et les prédictions.
+
+\vspace{0.3cm}
+
+\begin{mdframed}[backgroundcolor=gris, linecolor=grisfonce, linewidth=0.8pt, roundcorner=5pt]
+\textbf{Difficultés rencontrées}\\[0.2cm]
+\begin{itemize}[leftmargin=1cm]
+\item Les messages étant tous en anglais, il a fallu vérifier que cela ne posait pas de problème pour nos outils et notre approche.
+\item La question de l'équilibre des données : combien de messages par catégorie fallait-il pour que le modèle apprenne correctement sans être biaisé vers une classe ?
+\item Certains messages étaient trop neutres ou trop génériques pour appartenir clairement à une catégorie. Il a fallu les identifier et les retirer.
+\end{itemize}
+\end{mdframed}
+
+\vspace{0.3cm}
+
+\begin{mdframed}[backgroundcolor=violetclair, linecolor=violet, linewidth=1.5pt, roundcorner=5pt]
+\textbf{\textcolor{violet}{Pour la semaine 3}}\\[0.2cm]
+\begin{itemize}[leftmargin=1cm]
+\item Enrichir les bases de données pour mieux équilibrer les catégories
+\item Retravailler et finaliser le MCD et le MOD
+\item Créer la base de données sous SQL
+\item Continuer l'amélioration du code et du modèle
+\end{itemize}
+\end{mdframed}

@@ -1,0 +1,86 @@
+---
+title: ""
+output:
+  pdf_document:
+    fig_caption: true
+geometry: margin=2.5cm
+fontsize: 11pt
+header-includes:
+  - \usepackage{xcolor}
+  - \usepackage{fancyhdr}
+  - \usepackage{mdframed}
+  - \usepackage{array}
+  - \usepackage{booktabs}
+  - \usepackage{enumitem}
+  - \definecolor{violet}{HTML}{6B3FA0}
+  - \definecolor{violetclair}{HTML}{EDE7F6}
+  - \definecolor{gris}{HTML}{F5F5F5}
+  - \definecolor{grisfonce}{HTML}{555555}
+  - \pagestyle{fancy}
+  - \fancyhf{}
+  - \renewcommand{\headrulewidth}{0pt}
+  - \renewcommand{\footrulewidth}{0pt}
+  - \fancyfoot[C]{\thepage}
+  - \setlength{\parindent}{0pt}
+  - \setlength{\parskip}{6pt}
+---
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+\begin{center}
+{\Large \textbf{\textcolor{violet}{Compte rendu semaine 8}}}\\[0.4cm]
+{\normalsize \textcolor{grisfonce}{Projet sciences des Données 4}}\\[0.2cm]
+{\normalsize \textcolor{grisfonce}{L3 MIASHS — Chloé, Sarah, Hafsa, Nadir}}
+\end{center}
+
+\vspace{0.5cm}
+
+\begin{mdframed}[backgroundcolor=violetclair, linecolor=violet, linewidth=1.5pt, roundcorner=5pt]
+\textbf{\textcolor{violet}{Répartition des tâches}}\\[0.3cm]
+\begin{tabular}{p{3cm} p{10cm}}
+Chloé & Développement du site web (pages Prévention et Quiz), nettoyage et amélioration du notebook, nettoyage du dépôt Git, dépôt des dossiers sur GitHub \\[0.2cm]
+Sarah & Recherches hébergeur, intégration des fichiers .pkl dans le site, dépôt des comptes rendus, amélioration des comptes rendus qui ont été refait via R \\[0.2cm]
+Hafsa & Tri et dépôt du dossier Archives sur GitHub, sélection des visualisations pour le site (à distance) \\[0.2cm]
+Nadir & Compilation de tous les fichiers .pkl, ajout des lignes de sauvegarde joblib dans le notebook, nettoyage et amélioration du notebook, dépôt du dossier bases de données sur GitHub, contenu page Quiz \\
+\end{tabular}
+\end{mdframed}
+
+\vspace{0.4cm}
+
+# Semaine 8 — Sauvegarde des modèles et lancement du site web
+
+Chloé, Sarah et Nadir étaient présents cette semaine. Hafsa a contribué à distance.
+
+Cette semaine, le travail s'est organisé autour de deux axes principaux : la sauvegarde des modèles entraînés et le lancement du développement du site web.
+
+# Sauvegarde des modèles (.pkl)
+
+La sauvegarde des modèles au format .pkl (pickle) a nécessité plusieurs étapes. Dans un premier temps, Chloé a commencé le développement du site avec seulement deux fichiers .pkl disponibles car les modèles prenaient du temps à compiler. Nadir a ensuite réussi à compiler l'ensemble des modèles sur son ordinateur et a transmis tous les fichiers .pkl à Sarah, qui se chargera de les intégrer dans le site en ajoutant les lignes d'appel nécessaires. Nadir a également ajouté dans chaque cellule d'entraînement du notebook la ligne de sauvegarde via joblib, permettant de générer automatiquement les fichiers .pkl à chaque exécution. Ces fichiers permettront d'effectuer des prédictions en temps réel sur les messages soumis par les utilisateurs sans avoir à réentraîner les modèles à chaque requête. Les modèles sauvegardés correspondent aux cinq approches développées : Régression Logistique, TF-IDF, Bag of Words, Random Forest et Toxic BERT.
+
+Chloé et Nadir ont également nettoyé et amélioré le notebook : ajout de sous-catégories dans le sommaire, amélioration des explications associées à chaque modèle, correction des F1-scores dans le tableau comparatif et amélioration de la conclusion.
+
+# Développement du site web
+
+Sarah a effectué des recherches approfondies pour choisir l'hébergeur le plus adapté et a retenu Ionos, compatible avec PHP et Python et adapté à un projet étudiant.
+
+Chloé a développé les deux premières pages du site : la page Prévention, qui présente des informations sur les six types de harcèlement couverts par le projet (Racisme, Sexisme, Homophobie, Islamophobie, Validisme, Xénophobie), et la page Quiz, qui permet aux utilisateurs de tester leurs connaissances sur le harcèlement en ligne. Le contenu de la page Quiz a été préparé par Nadir et Sarah. Hafsa a sélectionné les visualisations qui seront intégrées sur le site.
+
+Le code du site web n'est pas encore déposé sur le dépôt Git car il n'est pas encore finalisé. Il sera déposé progressivement avant le rendu final du 12 avril.
+
+# Organisation du dépôt Git
+
+Chloé a supprimé les anciens fichiers pour nettoyer le dépôt. Hafsa a ensuite déposé le dossier Archives contenant les anciens fichiers triés. Sarah a déposé le dossier Compte rendu avec les comptes rendus refaits au propre. Nadir a déposé le nouveau dossier Bases de données. Chloé a déposé les autres dossiers.
+
+\vspace{0.3cm}
+
+\begin{mdframed}[backgroundcolor=violetclair, linecolor=violet, linewidth=1.5pt, roundcorner=5pt]
+\textbf{\textcolor{violet}{Pour la semaine 9}}\\[0.2cm]
+\begin{itemize}[leftmargin=1cm]
+\item Finaliser et déposer le code du site web sur le dépôt Git
+\item Faire la vidéo Youtube de présentation du projet
+\item Intégrer les fichiers .pkl dans le site et tester les prédictions en temps réel
+\item Intégrer les visualisations sélectionnées sur le site
+\item Préparer la soutenance du 15 avril
+\end{itemize}
+\end{mdframed}
