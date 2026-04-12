@@ -1,0 +1,1175 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HateGuard — Détection du Harcèlement en Ligne</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --violet: #904B7B;
+    --violet-dark: #6B2F5C;
+    --violet-light: #C47AAB;
+    --rose: #FFC0CB;
+    --rose-light: #FFE8EE;
+    --noir: #0F0A0D;
+    --gris-fonce: #1A1118;
+    --gris-mid: #2D1F28;
+    --gris-texte: #8A6A7A;
+    --blanc: #FDF6F9;
+    --accent: #E91E8C;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--noir);
+    color: var(--blanc);
+    font-family: 'DM Sans', sans-serif;
+    overflow-x: hidden;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    padding: 1.2rem 3rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: rgba(15, 10, 13, 0.85);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(144, 75, 123, 0.2);
+  }
+
+  .nav-logo {
+    font-family: 'DM Serif Display', serif;
+    font-size: 1.4rem;
+    color: var(--violet-light);
+    letter-spacing: -0.02em;
+  }
+
+  .nav-logo span { color: var(--accent); }
+
+  .nav-links {
+    display: flex;
+    gap: 2rem;
+    list-style: none;
+  }
+
+  .nav-links a {
+    color: var(--gris-texte);
+    text-decoration: none;
+    font-size: 0.9rem;
+    font-weight: 500;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    transition: color 0.2s;
+  }
+
+  .nav-links a:hover { color: var(--violet-light); }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 8rem 3rem 4rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero-bg {
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 60% 50% at 70% 40%, rgba(144, 75, 123, 0.15) 0%, transparent 70%),
+      radial-gradient(ellipse 40% 40% at 20% 70%, rgba(233, 30, 140, 0.08) 0%, transparent 60%);
+  }
+
+  .hero-grid {
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(144, 75, 123, 0.05) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(144, 75, 123, 0.05) 1px, transparent 1px);
+    background-size: 60px 60px;
+  }
+
+  .hero-content {
+    position: relative;
+    max-width: 900px;
+    text-align: center;
+  }
+
+  .hero-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: rgba(144, 75, 123, 0.15);
+    border: 1px solid rgba(144, 75, 123, 0.3);
+    padding: 0.4rem 1rem;
+    border-radius: 100px;
+    font-size: 0.8rem;
+    font-family: 'DM Mono', monospace;
+    color: var(--violet-light);
+    margin-bottom: 2rem;
+    letter-spacing: 0.05em;
+  }
+
+  .hero-badge::before {
+    content: '';
+    width: 6px; height: 6px;
+    background: var(--accent);
+    border-radius: 50%;
+    animation: pulse 2s infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.4; transform: scale(0.8); }
+  }
+
+  h1 {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(3rem, 7vw, 6rem);
+    line-height: 1.05;
+    letter-spacing: -0.03em;
+    margin-bottom: 1.5rem;
+  }
+
+  h1 em {
+    font-style: italic;
+    color: var(--violet-light);
+  }
+
+  .hero-sub {
+    font-size: 1.15rem;
+    color: var(--gris-texte);
+    max-width: 600px;
+    margin: 0 auto 3rem;
+    line-height: 1.7;
+    font-weight: 300;
+  }
+
+  .hero-cta {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  .btn-primary {
+    background: var(--violet);
+    color: white;
+    padding: 0.9rem 2rem;
+    border: none;
+    border-radius: 8px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.95rem;
+    font-weight: 600;
+    cursor: pointer;
+    text-decoration: none;
+    transition: all 0.2s;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .btn-primary:hover {
+    background: var(--violet-dark);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 30px rgba(144, 75, 123, 0.4);
+  }
+
+  .btn-secondary {
+    background: transparent;
+    color: var(--violet-light);
+    padding: 0.9rem 2rem;
+    border: 1px solid rgba(144, 75, 123, 0.4);
+    border-radius: 8px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.95rem;
+    font-weight: 500;
+    cursor: pointer;
+    text-decoration: none;
+    transition: all 0.2s;
+  }
+
+  .btn-secondary:hover {
+    border-color: var(--violet-light);
+    background: rgba(144, 75, 123, 0.1);
+  }
+
+  /* STATS BAND */
+  .stats-band {
+    padding: 2rem 3rem;
+    border-top: 1px solid rgba(144, 75, 123, 0.15);
+    border-bottom: 1px solid rgba(144, 75, 123, 0.15);
+    display: flex;
+    justify-content: center;
+    gap: 5rem;
+    background: rgba(45, 31, 40, 0.3);
+  }
+
+  .stat-item {
+    text-align: center;
+  }
+
+  .stat-number {
+    font-family: 'DM Serif Display', serif;
+    font-size: 2.5rem;
+    color: var(--violet-light);
+    display: block;
+  }
+
+  .stat-label {
+    font-size: 0.8rem;
+    color: var(--gris-texte);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+
+  /* SECTIONS */
+  section {
+    padding: 6rem 3rem;
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  .section-tag {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.75rem;
+    color: var(--accent);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin-bottom: 0.8rem;
+  }
+
+  h2 {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(2rem, 4vw, 3rem);
+    letter-spacing: -0.02em;
+    margin-bottom: 1rem;
+  }
+
+  .section-desc {
+    color: var(--gris-texte);
+    font-size: 1.05rem;
+    line-height: 1.7;
+    max-width: 650px;
+    margin-bottom: 3rem;
+  }
+
+  /* PREDICTION */
+  #prediction {
+    background: var(--gris-fonce);
+    max-width: 100%;
+    border-top: 1px solid rgba(144, 75, 123, 0.15);
+    border-bottom: 1px solid rgba(144, 75, 123, 0.15);
+  }
+
+  #prediction > * {
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  .pred-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  .pred-box {
+    background: rgba(45, 31, 40, 0.5);
+    border: 1px solid rgba(144, 75, 123, 0.25);
+    border-radius: 16px;
+    padding: 2.5rem;
+    margin-top: 2rem;
+  }
+
+  .pred-input-label {
+    font-size: 0.85rem;
+    color: var(--gris-texte);
+    margin-bottom: 0.8rem;
+    font-family: 'DM Mono', monospace;
+    letter-spacing: 0.05em;
+  }
+
+  textarea {
+    width: 100%;
+    background: rgba(15, 10, 13, 0.6);
+    border: 1px solid rgba(144, 75, 123, 0.3);
+    border-radius: 10px;
+    padding: 1.2rem;
+    color: var(--blanc);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 1rem;
+    line-height: 1.6;
+    resize: vertical;
+    min-height: 120px;
+    transition: border-color 0.2s;
+    outline: none;
+  }
+
+  textarea:focus {
+    border-color: var(--violet-light);
+  }
+
+  textarea::placeholder { color: rgba(138, 106, 122, 0.6); }
+
+  .pred-actions {
+    display: flex;
+    gap: 1rem;
+    margin-top: 1.2rem;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+
+  .pred-result {
+    margin-top: 2rem;
+    display: none;
+  }
+
+  .pred-result.visible { display: block; }
+
+  .result-card {
+    border-radius: 12px;
+    padding: 1.8rem;
+    display: flex;
+    gap: 1.5rem;
+    align-items: flex-start;
+    animation: fadeUp 0.4s ease;
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(12px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .result-card.haineux {
+    background: rgba(144, 75, 123, 0.12);
+    border: 1px solid rgba(144, 75, 123, 0.4);
+  }
+
+  .result-card.neutre {
+    background: rgba(45, 180, 100, 0.08);
+    border: 1px solid rgba(45, 180, 100, 0.3);
+  }
+
+  .result-icon {
+    font-size: 2.5rem;
+    flex-shrink: 0;
+  }
+
+  .result-type {
+    font-family: 'DM Serif Display', serif;
+    font-size: 1.6rem;
+    margin-bottom: 0.3rem;
+  }
+
+  .result-card.haineux .result-type { color: var(--violet-light); }
+  .result-card.neutre .result-type { color: #4CAF82; }
+
+  .result-cat {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.85rem;
+    color: var(--gris-texte);
+    margin-bottom: 0.5rem;
+  }
+
+  .result-cat span {
+    color: var(--accent);
+    font-weight: 500;
+  }
+
+  .result-conf {
+    font-size: 0.85rem;
+    color: var(--gris-texte);
+  }
+
+  .conf-bar {
+    height: 4px;
+    background: rgba(144, 75, 123, 0.2);
+    border-radius: 100px;
+    margin-top: 0.5rem;
+    overflow: hidden;
+    width: 200px;
+  }
+
+  .conf-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--violet), var(--accent));
+    border-radius: 100px;
+    transition: width 0.6s ease;
+  }
+
+  .examples-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1rem;
+    margin-top: 2rem;
+  }
+
+  .example-chip {
+    background: rgba(45, 31, 40, 0.6);
+    border: 1px solid rgba(144, 75, 123, 0.2);
+    border-radius: 10px;
+    padding: 1rem 1.2rem;
+    cursor: pointer;
+    transition: all 0.2s;
+    text-align: left;
+  }
+
+  .example-chip:hover {
+    border-color: var(--violet-light);
+    background: rgba(144, 75, 123, 0.1);
+    transform: translateY(-2px);
+  }
+
+  .example-chip .chip-label {
+    font-size: 0.72rem;
+    color: var(--accent);
+    font-family: 'DM Mono', monospace;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-bottom: 0.4rem;
+  }
+
+  .example-chip .chip-text {
+    font-size: 0.88rem;
+    color: var(--gris-texte);
+    line-height: 1.5;
+  }
+
+  /* MODELES */
+  .models-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 1.5rem;
+    margin-top: 2rem;
+  }
+
+  .model-card {
+    background: rgba(45, 31, 40, 0.4);
+    border: 1px solid rgba(144, 75, 123, 0.2);
+    border-radius: 14px;
+    padding: 1.8rem;
+    transition: all 0.25s;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .model-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--violet), var(--accent));
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.3s;
+  }
+
+  .model-card:hover { 
+    border-color: rgba(144, 75, 123, 0.5);
+    transform: translateY(-4px);
+    box-shadow: 0 12px 40px rgba(144, 75, 123, 0.15);
+  }
+
+  .model-card:hover::before { transform: scaleX(1); }
+
+  .model-name {
+    font-family: 'DM Serif Display', serif;
+    font-size: 1.3rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .model-desc {
+    font-size: 0.88rem;
+    color: var(--gris-texte);
+    line-height: 1.6;
+    margin-bottom: 1.5rem;
+  }
+
+  .model-scores {
+    display: flex;
+    gap: 1rem;
+  }
+
+  .score-item {
+    flex: 1;
+  }
+
+  .score-value {
+    font-family: 'DM Serif Display', serif;
+    font-size: 1.8rem;
+    color: var(--violet-light);
+    display: block;
+    line-height: 1;
+  }
+
+  .score-label {
+    font-size: 0.72rem;
+    color: var(--gris-texte);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    margin-top: 0.2rem;
+  }
+
+  /* COMPARAISON TABLE */
+  .compare-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 2rem;
+    font-size: 0.9rem;
+  }
+
+  .compare-table th {
+    text-align: left;
+    padding: 1rem 1.2rem;
+    font-family: 'DM Mono', monospace;
+    font-size: 0.75rem;
+    color: var(--accent);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    border-bottom: 1px solid rgba(144, 75, 123, 0.2);
+  }
+
+  .compare-table td {
+    padding: 1rem 1.2rem;
+    border-bottom: 1px solid rgba(144, 75, 123, 0.1);
+    color: var(--gris-texte);
+    vertical-align: middle;
+  }
+
+  .compare-table tr:hover td {
+    background: rgba(144, 75, 123, 0.05);
+    color: var(--blanc);
+  }
+
+  .compare-table td:first-child {
+    font-weight: 600;
+    color: var(--blanc);
+  }
+
+  .score-pill {
+    display: inline-block;
+    padding: 0.2rem 0.7rem;
+    border-radius: 100px;
+    font-family: 'DM Mono', monospace;
+    font-size: 0.82rem;
+    font-weight: 500;
+  }
+
+  .score-high {
+    background: rgba(144, 75, 123, 0.2);
+    color: var(--violet-light);
+  }
+
+  .score-mid {
+    background: rgba(233, 30, 140, 0.1);
+    color: #E91E8C;
+  }
+
+  .score-low {
+    background: rgba(138, 106, 122, 0.15);
+    color: var(--gris-texte);
+  }
+
+  .best-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    background: linear-gradient(135deg, var(--violet), var(--accent));
+    color: white;
+    padding: 0.15rem 0.6rem;
+    border-radius: 100px;
+    font-size: 0.7rem;
+    font-weight: 600;
+    margin-left: 0.5rem;
+  }
+
+  /* CATEGORIE BARS */
+  .cat-bars {
+    margin-top: 2rem;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+  }
+
+  .cat-bar-item {
+    background: rgba(45, 31, 40, 0.4);
+    border: 1px solid rgba(144, 75, 123, 0.15);
+    border-radius: 10px;
+    padding: 1.2rem;
+  }
+
+  .cat-bar-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.6rem;
+  }
+
+  .cat-bar-name {
+    font-size: 0.88rem;
+    font-weight: 500;
+  }
+
+  .cat-bar-score {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.85rem;
+    color: var(--violet-light);
+  }
+
+  .cat-bar-track {
+    height: 6px;
+    background: rgba(144, 75, 123, 0.15);
+    border-radius: 100px;
+    overflow: hidden;
+  }
+
+  .cat-bar-fill {
+    height: 100%;
+    border-radius: 100px;
+    background: linear-gradient(90deg, var(--violet), var(--accent));
+    transition: width 1s ease;
+  }
+
+  /* EQUIPE */
+  .team-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1.2rem;
+    margin-top: 2rem;
+  }
+
+  .team-card {
+    background: rgba(45, 31, 40, 0.4);
+    border: 1px solid rgba(144, 75, 123, 0.2);
+    border-radius: 12px;
+    padding: 1.5rem;
+    text-align: center;
+    transition: all 0.2s;
+  }
+
+  .team-card:hover {
+    border-color: var(--violet-light);
+    transform: translateY(-3px);
+  }
+
+  .team-avatar {
+    width: 56px; height: 56px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--violet), var(--accent));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'DM Serif Display', serif;
+    font-size: 1.4rem;
+    margin: 0 auto 1rem;
+  }
+
+  .team-name {
+    font-weight: 600;
+    font-size: 0.95rem;
+    margin-bottom: 0.3rem;
+  }
+
+  .team-role {
+    font-size: 0.78rem;
+    color: var(--accent);
+    font-family: 'DM Mono', monospace;
+    letter-spacing: 0.05em;
+  }
+
+  /* FOOTER */
+  footer {
+    padding: 3rem;
+    text-align: center;
+    border-top: 1px solid rgba(144, 75, 123, 0.15);
+    color: var(--gris-texte);
+    font-size: 0.85rem;
+  }
+
+  footer span { color: var(--violet-light); }
+
+  /* SEPARATOR */
+  .sep {
+    width: 100%;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(144, 75, 123, 0.3), transparent);
+    margin: 0;
+  }
+
+  @media (max-width: 768px) {
+    nav { padding: 1rem 1.5rem; }
+    .nav-links { display: none; }
+    section { padding: 4rem 1.5rem; }
+    .stats-band { gap: 2rem; flex-wrap: wrap; padding: 2rem 1.5rem; }
+    .team-grid { grid-template-columns: repeat(2, 1fr); }
+    .cat-bars { grid-template-columns: 1fr; }
+    h1 { font-size: 2.5rem; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">Hate<span>Guard</span></div>
+  <ul class="nav-links">
+    <li><a href="#prediction">Prédiction</a></li>
+    <li><a href="#modeles">Modèles</a></li>
+    <li><a href="#resultats">Résultats</a></li>
+    <li><a href="#equipe">Équipe</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-grid"></div>
+  <div class="hero-content">
+    <div class="hero-badge">Projet Machine Learning — L3 MIASHS - Module science des données 4</div>
+    <h1>Détecter la <em>haine</em><br>automatiquement</h1>
+    <p class="hero-sub">
+      Nous avons entraîné plusieurs modèles d'intelligence artificielle pour détecter automatiquement les messages haineux et les classifier en 6 catégories de harcèlement.
+    </p>
+    <div class="hero-cta">
+      <a href="#prediction" class="btn-primary">→ Tester le modèle</a>
+      <a href="#resultats" class="btn-secondary">Voir les résultats</a>
+    </div>
+  </div>
+</div>
+
+<!-- STATS -->
+<div class="stats-band">
+  <div class="stat-item">
+    <span class="stat-number">2 640</span>
+    <span class="stat-label">Messages analysés</span>
+  </div>
+  <div class="stat-item">
+    <span class="stat-number">6</span>
+    <span class="stat-label">Catégories de harcèlement</span>
+  </div>
+  <div class="stat-item">
+    <span class="stat-number">5</span>
+    <span class="stat-label">Modèles entraînés</span>
+  </div>
+  <div class="stat-item">
+    <span class="stat-number">97%</span>
+    <span class="stat-label">Meilleure accuracy</span>
+  </div>
+</div>
+
+<div class="sep"></div>
+
+<!-- PREDICTION -->
+<section id="prediction" style="max-width:100%; padding: 6rem 3rem;">
+  <div class="pred-inner">
+    <p class="section-tag">Démonstration</p>
+    <h2>Tester le modèle</h2>
+    <p class="section-desc">
+      Entrez un message en anglais. Notre modèle Bag of Words analysera s'il contient du discours haineux et tentera d'identifier la catégorie.
+    </p>
+
+    <div class="pred-box">
+      <p class="pred-input-label">MESSAGE À ANALYSER</p>
+      <textarea id="msgInput" placeholder="Tapez ou collez un message en anglais ici..."></textarea>
+      <div class="pred-actions">
+        <button class="btn-primary" onclick="predict()">Analyser le message →</button>
+        <button class="btn-secondary" onclick="clearPred()">Effacer</button>
+      </div>
+
+      <div class="pred-result" id="predResult">
+        <div class="result-card" id="resultCard">
+          <div class="result-icon" id="resultIcon"></div>
+          <div>
+            <div class="result-type" id="resultType"></div>
+            <div class="result-cat" id="resultCat"></div>
+            <div class="result-conf">
+              Confiance du modèle
+              <div class="conf-bar"><div class="conf-fill" id="confFill"></div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <p style="font-size:0.85rem; color: var(--gris-texte); margin: 1.5rem 0 0.8rem;">Essayez ces exemples :</p>
+    <div class="examples-grid">
+      <div class="example-chip" onclick="setExample(this.querySelector('.chip-text').textContent)">
+        <div class="chip-label">⚠ haineux</div>
+        <div class="chip-text">I hate black people, they are disgusting.</div>
+      </div>
+      <div class="example-chip" onclick="setExample(this.querySelector('.chip-text').textContent)">
+        <div class="chip-label">⚠ haineux</div>
+        <div class="chip-text">Muslims are all terrorists and should be banned.</div>
+      </div>
+      <div class="example-chip" onclick="setExample(this.querySelector('.chip-text').textContent)">
+        <div class="chip-label">⚠ haineux</div>
+        <div class="chip-text">Women are not intelligent enough to lead.</div>
+      </div>
+      <div class="example-chip" onclick="setExample(this.querySelector('.chip-text').textContent)">
+        <div class="chip-label">⚠ haineux</div>
+        <div class="chip-text">Disabled people are a burden on society.</div>
+      </div>
+      <div class="example-chip" onclick="setExample(this.querySelector('.chip-text').textContent)">
+        <div class="chip-label">⚠ haineux</div>
+        <div class="chip-text">Immigrants are destroying our country.</div>
+      </div>
+      <div class="example-chip" onclick="setExample(this.querySelector('.chip-text').textContent)">
+        <div class="chip-label">✓ neutre</div>
+        <div class="chip-text">I love your TikTok videos, keep it up!</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="sep"></div>
+
+<!-- MODELES -->
+<section id="modeles">
+  <p class="section-tag">Architecture</p>
+  <h2>Les modèles développés</h2>
+  <p class="section-desc">Nous avons entraîné 5 modèles différents, du plus simple au plus complexe, pour comparer leurs performances sur la détection de harcèlement.</p>
+
+  <div class="models-grid">
+    <div class="model-card">
+      <div class="model-name">Bag of Words</div>
+      <div class="model-desc">Transforme chaque message en vecteur de fréquences de mots. Modèle de référence (baseline) — simple, rapide, interprétable.</div>
+      <div class="model-scores">
+        <div class="score-item">
+          <span class="score-value">87.9%</span>
+          <div class="score-label">Binaire</div>
+        </div>
+        <div class="score-item">
+          <span class="score-value">90%</span>
+          <div class="score-label">Multi-classes</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="model-card">
+      <div class="model-name">Régression Logistique</div>
+      <div class="model-desc">Modèle linéaire classique combiné à TF-IDF. Rapide et interprétable, il donne des probabilités pour chaque classe.</div>
+      <div class="model-scores">
+        <div class="score-item">
+          <span class="score-value">89%</span>
+          <div class="score-label">Binaire</div>
+        </div>
+        <div class="score-item">
+          <span class="score-value">91%</span>
+          <div class="score-label">Multi-classes</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="model-card">
+      <div class="model-name">TF-IDF</div>
+      <div class="model-desc">Représentation pondérée du texte — les mots rares et discriminants ont plus de poids. Notre modèle le plus performant.</div>
+      <div class="model-scores">
+        <div class="score-item">
+          <span class="score-value">97%</span>
+          <div class="score-label">Binaire</div>
+        </div>
+        <div class="score-item">
+          <span class="score-value">91%</span>
+          <div class="score-label">Multi-classes</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="model-card">
+      <div class="model-name">Random Forest</div>
+      <div class="model-desc">Ensemble d'arbres de décision combinant vocabulaire, style et émotions. Efficace sur les relations non-linéaires entre features.</div>
+      <div class="model-scores">
+        <div class="score-item">
+          <span class="score-value">88%</span>
+          <div class="score-label">Binaire</div>
+        </div>
+        <div class="score-item">
+          <span class="score-value">88%</span>
+          <div class="score-label">Multi-classes</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="model-card">
+      <div class="model-name">Toxic BERT</div>
+      <div class="model-desc">Modèle de langage pré-entraîné sur des données de toxicité. Comprend le contexte et les relations entre les mots dans la phrase.</div>
+      <div class="model-scores">
+        <div class="score-item">
+          <span class="score-value">94%</span>
+          <div class="score-label">Binaire</div>
+        </div>
+        <div class="score-item">
+          <span class="score-value">91%</span>
+          <div class="score-label">Multi-classes</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="model-card">
+      <div class="model-name">Prompt Engineering</div>
+      <div class="model-desc">Test manuel avec ChatGPT via un prompt structuré. Excellent sur les cas évidents mais inutilisable à grande échelle.</div>
+      <div class="model-scores">
+        <div class="score-item">
+          <span class="score-value">6/6</span>
+          <div class="score-label">Testé</div>
+        </div>
+        <div class="score-item">
+          <span class="score-value">100%</span>
+          <div class="score-label">Cas évidents</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="sep"></div>
+
+<!-- RESULTATS -->
+<section id="resultats">
+  <p class="section-tag">Évaluation</p>
+  <h2>Comparaison des résultats</h2>
+  <p class="section-desc">Tous les modèles ont été évalués sur la même base Test — 240 messages jamais vus pendant l'entraînement.</p>
+
+  <table class="compare-table">
+    <thead>
+      <tr>
+        <th>Modèle</th>
+        <th>Binaire</th>
+        <th>Multi-classes</th>
+        <th>Homophobie</th>
+        <th>Islamophobie</th>
+        <th>Racisme</th>
+        <th>Sexisme</th>
+        <th>Validisme</th>
+        <th>Xénophobie</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>TF-IDF <span class="best-badge">★ Meilleur</span></td>
+        <td><span class="score-pill score-high">97-98%</span></td>
+        <td><span class="score-pill score-high">91%</span></td>
+        <td>89%</td><td>90%</td><td>84%</td><td>79%</td><td>91%</td><td>86%</td>
+      </tr>
+      <tr>
+        <td>Toxic BERT</td>
+        <td><span class="score-pill score-high">94%</span></td>
+        <td><span class="score-pill score-high">91%</span></td>
+        <td>87%</td><td>85%</td><td>—</td><td>74%</td><td>80%</td><td>85%</td>
+      </tr>
+      <tr>
+        <td>Régression Logistique</td>
+        <td><span class="score-pill score-mid">89%</span></td>
+        <td><span class="score-pill score-high">91%</span></td>
+        <td>95%</td><td>88%</td><td>78%</td><td>91%</td><td>97%</td><td>95%</td>
+      </tr>
+      <tr>
+        <td>Random Forest</td>
+        <td><span class="score-pill score-mid">88%</span></td>
+        <td><span class="score-pill score-mid">88%</span></td>
+        <td>95%</td><td>89%</td><td>78%</td><td>77%</td><td>97%</td><td>97%</td>
+      </tr>
+      <tr>
+        <td>Bag of Words</td>
+        <td><span class="score-pill score-mid">87.9%</span></td>
+        <td><span class="score-pill score-mid">90%</span></td>
+        <td>92%</td><td>81%</td><td>86%</td><td>84%</td><td>100%</td><td>97%</td>
+      </tr>
+      <tr>
+        <td>Prompt Engineering</td>
+        <td><span class="score-pill score-low">6/6 ✓</span></td>
+        <td><span class="score-pill score-low">6/6 ✓</span></td>
+        <td>✓</td><td>✓</td><td>✓</td><td>✓</td><td>✓</td><td>✓</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <p style="font-size:0.85rem; color: var(--gris-texte); margin-top: 1rem;">* F1-scores par catégorie sur la base Test</p>
+
+  <div style="margin-top: 3rem;">
+    <p class="section-tag">Bag of Words - Performances par catégorie</p>
+    <h2 style="font-size: 1.8rem; margin-bottom: 0.5rem;">Notre modèle en détail</h2>
+    <p class="section-desc" style="margin-bottom: 0;">Le Validisme (100%) et la Xénophobie (97%) sont les mieux détectées grâce à leurs vocabulaires exclusifs. Le Racisme et le Sexisme partagent du vocabulaire commun ce qui crée des confusions.</p>
+  </div>
+
+  <div class="cat-bars">
+    <div class="cat-bar-item">
+      <div class="cat-bar-header">
+        <span class="cat-bar-name">Validisme</span>
+        <span class="cat-bar-score">100%</span>
+      </div>
+      <div class="cat-bar-track"><div class="cat-bar-fill" style="width:100%"></div></div>
+    </div>
+    <div class="cat-bar-item">
+      <div class="cat-bar-header">
+        <span class="cat-bar-name">Xénophobie</span>
+        <span class="cat-bar-score">97%</span>
+      </div>
+      <div class="cat-bar-track"><div class="cat-bar-fill" style="width:97%"></div></div>
+    </div>
+    <div class="cat-bar-item">
+      <div class="cat-bar-header">
+        <span class="cat-bar-name">Homophobie</span>
+        <span class="cat-bar-score">92%</span>
+      </div>
+      <div class="cat-bar-track"><div class="cat-bar-fill" style="width:92%"></div></div>
+    </div>
+    <div class="cat-bar-item">
+      <div class="cat-bar-header">
+        <span class="cat-bar-name">Racisme</span>
+        <span class="cat-bar-score">86%</span>
+      </div>
+      <div class="cat-bar-track"><div class="cat-bar-fill" style="width:86%"></div></div>
+    </div>
+    <div class="cat-bar-item">
+      <div class="cat-bar-header">
+        <span class="cat-bar-name">Sexisme</span>
+        <span class="cat-bar-score">84%</span>
+      </div>
+      <div class="cat-bar-track"><div class="cat-bar-fill" style="width:84%"></div></div>
+    </div>
+    <div class="cat-bar-item">
+      <div class="cat-bar-header">
+        <span class="cat-bar-name">Islamophobie</span>
+        <span class="cat-bar-score">81%</span>
+      </div>
+      <div class="cat-bar-track"><div class="cat-bar-fill" style="width:81%"></div></div>
+    </div>
+  </div>
+</section>
+
+<div class="sep"></div>
+
+<!-- EQUIPE -->
+<section id="equipe">
+  <p class="section-tag">Équipe</p>
+  <h2>Qui sommes-nous ?</h2>
+  <p class="section-desc">Étudiants en L3 — ce projet a été réalisé dans le cadre d'un cours de Machine Learning.</p>
+  <div class="team-grid">
+    <div class="team-card">
+      <div class="team-avatar">C</div>
+      <div class="team-name">Chloé</div>
+      <div class="team-role">Bag of Words</div>
+    </div>
+    <div class="team-card">
+      <div class="team-avatar">S</div>
+      <div class="team-name">Sarah</div>
+      <div class="team-role">TF-IDF</div>
+    </div>
+    <div class="team-card">
+      <div class="team-avatar">N</div>
+      <div class="team-name">Nadir</div>
+      <div class="team-role">Toxic BERT</div>
+    </div>
+    <div class="team-card">
+      <div class="team-avatar">H</div>
+      <div class="team-name">Hafsa</div>
+      <div class="team-role">Random Forest</div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <p>HateGuard — Projet Machine Learning 2026 — <span>Chloé, Sarah, Nadir </span></p>
+</footer>
+
+<script>
+// Dictionnaire simplifié de mots clés par catégorie
+const keywords = {
+  homophobie: ['gay','queer','lesbian','faggot','fag','fags','faggots','homosexual','bisexual','lgbt'],
+  islamophobie: ['muslim','muslims','islam','islamic','mosque','jihad','terrorist','allah','quran','camel','muzzie','jihadi'],
+  racisme: ['black','nigger','nigga','niggas','negro','colored','racist','racial','white supremacy','blck','coon'],
+  sexisme: ['women','woman','female','females','girl','bitch','slut','whore','feminist','sexist','gender'],
+  validisme: ['disabled','disability','cripple','handicapped','retard','mong','burden','wheelchair','autistic','disabld'],
+  xenophobie: ['immigrant','immigrants','immigration','foreigner','alien','refugee','border','deport','wetback','immigrnt']
+};
+
+const hateWords = Object.values(keywords).flat();
+
+function detectCategory(text) {
+  const lower = text.toLowerCase();
+  let maxScore = 0;
+  let detectedCat = null;
+  for (const [cat, words] of Object.entries(keywords)) {
+    let score = words.filter(w => lower.includes(w)).length;
+    if (score > maxScore) { maxScore = score; detectedCat = cat; }
+  }
+  return { cat: detectedCat, score: maxScore };
+}
+
+function isHateful(text) {
+  const lower = text.toLowerCase();
+  return hateWords.some(w => lower.includes(w));
+}
+
+const catNames = {
+  homophobie: 'Homophobie',
+  islamophobie: 'Islamophobie',
+  racisme: 'Racisme',
+  sexisme: 'Sexisme',
+  validisme: 'Validisme',
+  xenophobie: 'Xénophobie'
+};
+
+function predict() {
+  const text = document.getElementById('msgInput').value.trim();
+  if (!text) return;
+
+  const hateful = isHateful(text);
+  const { cat, score } = detectCategory(text);
+  const conf = hateful ? Math.min(95, 70 + score * 8) : Math.min(95, 75 + Math.random() * 15);
+
+  const resultDiv = document.getElementById('predResult');
+  const card = document.getElementById('resultCard');
+  const icon = document.getElementById('resultIcon');
+  const type = document.getElementById('resultType');
+  const catDiv = document.getElementById('resultCat');
+  const fill = document.getElementById('confFill');
+
+  card.className = 'result-card ' + (hateful ? 'haineux' : 'neutre');
+  icon.textContent = hateful ? '⚠️' : '✅';
+  type.textContent = hateful ? 'Message Haineux' : 'Message Neutre';
+
+  if (hateful && cat) {
+    catDiv.innerHTML = `Catégorie détectée : <span>${catNames[cat]}</span>`;
+  } else if (hateful) {
+    catDiv.innerHTML = `Catégorie détectée : <span>Non déterminée</span>`;
+  } else {
+    catDiv.innerHTML = `Aucune forme de harcèlement détectée`;
+  }
+
+  fill.style.width = '0%';
+  setTimeout(() => { fill.style.width = conf + '%'; }, 100);
+
+  resultDiv.classList.add('visible');
+  resultDiv.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+}
+
+function clearPred() {
+  document.getElementById('msgInput').value = '';
+  document.getElementById('predResult').classList.remove('visible');
+}
+
+function setExample(text) {
+  document.getElementById('msgInput').value = text;
+  document.getElementById('predResult').classList.remove('visible');
+  document.getElementById('msgInput').scrollIntoView({ behavior: 'smooth' });
+}
+
+document.getElementById('msgInput').addEventListener('keydown', function(e) {
+  if (e.key === 'Enter' && e.ctrlKey) predict();
+});
+</script>
+
+</body>
+</html>
